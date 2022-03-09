@@ -1,7 +1,5 @@
-# cs418-spring22-purple
-
-
 # Gun Violence in the US
+cs418-spring22-purple
 # Motivation
 
 Big Idea: Explore the correlation between gun violence cases with age, location, and/or socioeconomic factors in the area.
