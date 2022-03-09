@@ -1,8 +1,8 @@
 # cs418-spring22-purple
 
 
+# Gun Violence in the US
 # Motivation
-Gun Violence in the US
 
 Big Idea: Explore the correlation between gun violence cases with age, location, and/or socioeconomic factors in the area.
 Our Problem: Which groups have an increase in gun violence, and is there any bias with the victims?
@@ -26,4 +26,14 @@ Dataset: https://github.com/jamesqo/gun-violence-data
 - Additional Information:
     Each field has a specified format (i.e. address field only provides address of where the incident took place)
     Not all fields are required. We will use categories, such as, incident_id, date, state, city_or_county, etc. Additionally, we may drop any unneeded columns.
+
+# Project Goals
+Approach: Aggregate Gun Violence dataset with 3 datasets on gun reform laws, demographics, and population
+
+Scope of Project: Visualize the number of gun cases in the US using the Gun Violence dataset from the Gun Violence Archive.
+
+Hypothesized End Results: Find the relationship between socio-economic factors vs gun violence cases, categorize gun violence incidents by demographics
+
+What we hope to achieve for progress report: Categorize dataset based on whether the incident occurred before or after gun reform. Explore machine learning applications to predict likelihood of gun incidents in response to gun reform
+We plan to have a static system.
 
