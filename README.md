@@ -2,7 +2,7 @@
 cs418-spring22-purple
 # Motivation
 
-*Big Idea*: Explore the correlation between gun violence cases with age, location, and/or socioeconomic factors in the area.
+***Big Idea***: Explore the correlation between gun violence cases with age, location, and/or socioeconomic factors in the area.
 *Our Problem*: Which groups have an increase in gun violence, and is there any bias with the victims?
 
 *Question We Want To Answer*: Has gun reform impacted the number of gun violence cases in the US?
