@@ -31,12 +31,12 @@ cs418-spring22-purple
 ***Scope of Project***: Visualize the number of gun cases in the US using the Gun Violence dataset from the Gun Violence Archive.
 
 ***Hypothesized End Results***:
-    * Find the relationship between socio-economic factors and gun violence cases
-    * Categorize the number of gun violence incidents by demographics
+* Find the relationship between socio-economic factors and gun violence cases
+* Categorize the number of gun violence incidents by demographics
 
 ***Goals by Progress Report***:
-    * Categorize the dataset based on whether the gun violence incident occurred before or after gun reform.
-    * Explore machine learning applications to predict likelihood of gun incidents in response to gun reform
+* Categorize the dataset based on whether the gun violence incident occurred before or after gun reform.
+* Explore machine learning applications to predict likelihood of gun incidents in response to gun reform
 
 We plan to have a static system.
 
