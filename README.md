@@ -15,16 +15,21 @@ cs418-spring22-purple
 
 
 # Dataset Information
-***Dataset***: https://github.com/jamesqo/gun-violence-data
+***Dataset #1: Gun Violence Incidents***: https://github.com/jamesqo/gun-violence-data
 
 * Data is stored in a .csv file ordered by ascending date from January 2013 to March 2018. This dataset has no missing dates.
 * Data Type: Number of gun incidents and their description details between 2013 and 2018
 * Data Size:  239,678 rows and 29 columns
 * Feature Types: int, string, boolean, list[string], dict[int, string], or float
 
+
 ***Additional Information***:
 * Each field has a specified format (i.e. address field only provides address of where the incident took place)
 * Not all fields are required. We will use categories, such as, incident_id, date, state, city_or_county, etc. Additionally, we may drop any unneeded columns.
+
+***Dataset #2: Gun Reform in the US***: http://statefirearmlaws.org/resources
+
+***Dataset #3: US States Census 2010-2019***: https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417
 
 # Project Goals
 ***Approach***: Aggregate the Gun Violence dataset with 3 additional datasets on gun reform laws, demographics, and population.
