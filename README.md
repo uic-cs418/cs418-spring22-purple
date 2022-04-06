@@ -11,7 +11,7 @@ cs418-spring22-purple
 
 ***Significance***: Gun violence is a very common threat to all humans and begins to impact more people as years go on. It affects everyone, however, some groups are impacted much more than others, such as, people of color or people from locations that don’t have as much money.
 
-***Hypothesis***: Gun violence decreases after more gun reform laws are passed.
+***Hypothesis***: Gun violence counts decreases after more gun reform laws are passed.
 
 
 # Dataset Information
