@@ -80,7 +80,6 @@ def create_features_labels(dataset):
     return X, y
 
 # Create a baseline classifier `MajorityLabelClassifier` to test our classifier against. This will always predict the class equal to the mode of the labels.
-
 class MajorityLabelClassifier():
     # Initialize parameter for the classifier
     def __init__(self):
@@ -121,3 +120,50 @@ class MajorityLabelClassifier():
                 accurate_pred += 1
         return accurate_pred/total
 
+
+class DecisionTree():
+    def __init__(self):
+        self.clf_model = None
+
+    def fit(self, X_train, y_train):
+        self.clf_model = DecisionTreeClassifier()   
+        self.clf_model.fit(X_train,y_train)
+        return self.clf_model
+
+    def predict(self, X_test):
+        return self.clf_model.predict(X_test)
+
+
+    def get_decision_tree_eval_metrics(self, X, y, y_test, y_predict):
+        #evaluation metrics
+        train_accuracy = self.clf_model.score(X,y)  #this gives training accuracy
+        test_accuracy = accuracy_score(y_test, y_predict) #this gives testing accuracy
+
+        cm = confusion_matrix(y_test, y_predict) #confusion matrix
+        precision, recall, f1, support =  precision_recall_fscore_support(y_test, y_predict) #precision, recall, f1 score, and support for each class (decrease_in_gun_violence=0 and decrease_in_gun_violence=1)
+
+        return train_accuracy, test_accuracy, cm, precision, recall, f1
+
+    def display_metrics(self, X, y, y_test, y_predict):
+        train_accuracy, test_accuracy, cm, precision, recall, f1 =  self.get_decision_tree_eval_metrics(X, y, y_test, y_predict)
+        
+        print(f'Train Accuracy: {train_accuracy}')
+        print(f'Test Accuracy: {test_accuracy}')
+
+        print(f'precision: {precision}')
+        print(f'recall   : {recall}')
+        print(f'f1 score : {f1}')
+
+        #plot confusion matrix
+        sns.heatmap(cm, annot = True, fmt = ".3f", square = True, cmap = plt.cm.Blues);
+        plt.ylabel('True');
+        plt.xlabel('Predicted');
+        plt.title('Decision Tree Classifier Confusion Matrix');
+        plt.tight_layout();
+
+    def display_tree(self, X):
+        feature_names_list = list(X.columns) 
+        plt.figure(figsize=(15,15))
+        plot_tree(self.clf_model, feature_names = feature_names_list,  
+                class_names = ['No Decrease', 'Decrease'], 
+                filled = True, impurity = False); #class names match to `decrease` values [0=did not decrease, 1=did decrease]
