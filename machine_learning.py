@@ -6,6 +6,7 @@ import pandas as pd
 import seaborn as sns
 import sklearn
 from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn import svm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support
 from IPython.display import display, Latex, Markdown
@@ -155,10 +156,11 @@ class DecisionTree():
         print(f'f1 score : {f1}')
 
         #plot confusion matrix
+        sns.set(rc = {'figure.figsize':(4,4)})
         sns.heatmap(cm, annot = True, fmt = ".3f", square = True, cmap = plt.cm.Blues);
         plt.ylabel('True');
         plt.xlabel('Predicted');
-        plt.title('Decision Tree Classifier Confusion Matrix');
+        plt.title('Decision Tree Confusion Matrix');
         plt.tight_layout();
 
     def display_tree(self, X):
@@ -167,3 +169,92 @@ class DecisionTree():
         plot_tree(self.clf_model, feature_names = feature_names_list,  
                 class_names = ['No Decrease', 'Decrease'], 
                 filled = True, impurity = False); #class names match to `decrease` values [0=did not decrease, 1=did decrease]
+
+
+class SVM():
+    def __init__(self):
+        self.svc = None
+
+    def learn_classifier(self, X_train, y_train, kernel):
+        """ learns a classifier from the input features and labels using the kernel function supplied
+        Inputs:
+            X_train: scipy.sparse.csr.csr_matrix: sparse matrix of features, output of create_features()
+            y_train: numpy.ndarray(int): dense binary vector of class labels, output of create_labels()
+            kernel: str: kernel function to be used with classifier. [linear|poly|rbf|sigmoid]
+        Outputs:
+            sklearn.svm.SVC: classifier learnt from data
+        """
+    
+        self.svc =  svm.SVC(kernel = kernel)
+        return self.svc.fit(X_train, y_train)
+
+    def evaluate_classifier(self, classifier, X_validation, y_validation):
+        """ evaluates a classifier based on a supplied validation data
+        Inputs:
+            classifier: sklearn.svm.classes.SVC: classifer to evaluate
+            X_validation: scipy.sparse.csr.csr_matrix: sparse matrix of features
+            y_validation: numpy.ndarray(int): dense binary vector of class labels
+        Outputs:
+            double: accuracy of classifier on the validation data
+        """
+        y_pred = classifier.predict(X_validation)
+        return sklearn.metrics.accuracy_score(y_validation, y_pred)
+
+    def best_model_selection(self, kf, X, y):
+        """
+        Select the kernel giving best results using k-fold cross-validation.
+        Other parameters should be left default.
+        Input:
+        kf (sklearn.model_selection.KFold): kf object defined above
+        X (scipy.sparse.csr.csr_matrix): training data
+        y (array(int)): training labels
+        Return:
+        best_kernel (string)
+        """
+        kernel_accuracies = dict()
+        for kernel in ['linear', 'rbf', 'poly', 'sigmoid']:
+            fold_accuracies = []
+            for train_index, test_index in kf.split(X):
+                
+                # Use the documentation of KFold cross-validation to split
+                # training data and test data from create_features() and create_labels()
+                X_train, y_train = X.loc[train_index], y.loc[train_index]
+                X_test,  y_test  = X.loc[test_index] , y.loc[test_index]
+                
+                # call learn_classifer() using training split of kth fold
+                classifier = self.learn_classifier(X_train, y_train, kernel)
+                
+                # evaluate on the test split of kth fold
+                fold_accuracy = self.evaluate_classifier(classifier, X_test, y_test)
+                fold_accuracies.append(fold_accuracy)
+
+            # record avg accuracies and determine best model (kernel)
+            avg_fold_accuracy = np.mean(fold_accuracies)
+            kernel_accuracies[kernel] = avg_fold_accuracy
+
+        # return best kernel as string
+        print(kernel_accuracies)
+        best_kernel = max(kernel_accuracies, key = kernel_accuracies.get)
+        return best_kernel
+
+    def display_metrics(self, X, y, y_test, y_predict):
+        #evaluation metrics
+        train_accuracy = self.svc.score(X,y)  #this gives training accuracy
+        test_accuracy = accuracy_score(y_test, y_predict) #this gives testing accuracy
+
+        print(f'Train Accuracy: {train_accuracy}')
+        print(f'Test Accuracy: {test_accuracy}')
+
+        cm = confusion_matrix(y_test, y_predict) #confusion matrix
+        precision, recall, f1, support =  precision_recall_fscore_support(y_test, y_predict) #precision, recall, f1 score, and support for each class (decrease_in_gun_violence=0 and decrease_in_gun_violence=1)
+
+        print(f'precision: {precision}')
+        print(f'recall   : {recall}')
+        print(f'f1 score : {f1}')
+
+        #plot confusion matrix
+        sns.heatmap(cm, annot = True, fmt = ".3f", square = True, cmap = plt.cm.Blues);
+        plt.ylabel('True');
+        plt.xlabel('Predicted');
+        plt.title('SVC Confusion Matrix');
+        plt.tight_layout();
